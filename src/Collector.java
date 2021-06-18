@@ -8,6 +8,7 @@ public class Collector {
     private int lvl;
 
     ArrayList<Pokemon> collection;
+    Pokemon main;
 
     /*
      * Default constructor with name
@@ -32,6 +33,18 @@ public class Collector {
         return s;
     }
 
+    public Pokemon setMain(Pokemon p) {
+        main = p;
+        return main;
+    }
+
+    public Pokemon getMain() {
+        return main;
+    }
+
+    public String getName() {
+        return name;
+    }
     /*
      * Overridden toString method for listing individual collector info
      */

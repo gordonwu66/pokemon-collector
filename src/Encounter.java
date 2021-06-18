@@ -4,42 +4,49 @@
  */
 public class Encounter {
     Pokedex dex;
+    Player player;
 
-    public Encounter(Pokedex dexIn) {
+    public Encounter(Pokedex dexIn, Player playerIn) {
         dex = dexIn;
+        player = playerIn;
     }
 
-    public Pokemon execute() {
+    public void start() {
         // Generate pokemon to encounter and choose to battle or escape
         Pokemon opponent = genPokemon();
 
         // Loop battle step until battle terminates through capture, escape, or defeat
-        return battle(opponent);
+        Pokemon result = battle(opponent);
+        if(result != null) {
+            // Add captured pokemon to player's collection
+            player.addPokemon(opponent);
+        }
     }
 
     private Pokemon genPokemon() {
         // Eventually selects pokemon and its parameters based on player's level
-        return new Pokemon(131, "Glacier");
-    }
-
-    /*
-     * A single turn in the battle sequence where the player attacks with their pokemon, throws a pokeball to capture,
-     * or runs away. The step and battle end through a defeat of either pokemon, escape, or successful capture.
-     */
-    private boolean battleStep() {
-        return true;
+        return new Pokemon(131, "Frost");
     }
 
     private Pokemon battle(Pokemon opponent) {
-        boolean encounterFinished = false;
+        int battleStatus = 0;
+        Pokemon self = player.getMain();
+        Battle battle = new Battle(self, opponent, dex);
+
+        System.out.println("A wild " +opponent.identify(dex) +" appeared!");
 
         // Player throws out their pokemon
+        System.out.println(player.getName() +" sends out " +self.identify(dex) +".");
 
-        while(!encounterFinished) {
-            encounterFinished = battleStep();
+        while(battleStatus == 0) {
+            battleStatus = battle.step();
         }
 
-        return opponent;
+        if(battleStatus == 1) {
+            return opponent;
+        } else {
+            return null;
+        }
     }
 
 }

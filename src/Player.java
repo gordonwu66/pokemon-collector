@@ -11,6 +11,6 @@ public class Player extends Collector {
      * Upon character creation, give the player a starting pokemon
      */
     public Pokemon starterPokemon() {
-        return this.addPokemon(new Pokemon(131, "Glacier"));
+        return this.setMain(this.addPokemon(new Pokemon(131, "Glacier")));
     }
 }
